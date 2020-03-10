@@ -2,19 +2,23 @@ from queue import Queue
 import copy
 
 que = Queue()
-
+goalStates = 0
 initial_state = {
     "board": [
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0]],
-    "numQueens": 0,
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]],
+
+        "numQueens": 0,
 }
 
 goal_state = {
-    "numQueens": 8
+    "numQueens": 1
 }
 
 def goal_test(state):
@@ -23,11 +27,11 @@ def goal_test(state):
 def checkPosition(position):
     #check all directions for a current queenz3
     #horizontal
-    for i in range(5):
+    for i in range(8):
         if current_board[position[0]][i] == 1:
             return False
 
-    for i in range(5):
+    for i in range(8):
         if current_board[i][position[1]] == 1:
             return False
 
@@ -43,15 +47,12 @@ while not que.empty():
     current_board = state["board"]
     current_cost = state["numQueens"]
 
-    for i in range(5):
-        for j in range(5):
+    for i in range(8):
+        for j in range(8):
             if(checkPosition([i,j])):
                 newBoard = copy.deepcopy(current_board)
                 newBoard[i][j] = 1
 
-                for x in range(5):
-                    print(newBoard[x])
-                print(" ")
                 if str(newBoard) in visited:
                     continue
                 else:
@@ -61,7 +62,14 @@ while not que.empty():
                     }
 
                     if goal_test(new_state):
-                        print("Goal State Reached")
-                        exit()
+                        #for x in range(8):
+                        #    print(new_state["board"][x])
+                        #print(" ")
+                        #print("Goal State Reached")
+                        goalStates+=1
+                        break
+                        #exit()
 
                     que.put(new_state)
+                    visited[str(newBoard)] = True
+print(goalStates,"goal states found")

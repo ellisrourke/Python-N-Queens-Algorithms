@@ -47,6 +47,8 @@ def checkPosition(position):
         if current_board[i][position[1]] == 1:
             return False
 
+    #check diagonal
+
 
     #position is allowed
     return True
