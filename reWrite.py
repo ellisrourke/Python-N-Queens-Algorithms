@@ -1,5 +1,6 @@
 from queue import Queue
 import copy
+import numpy as np
 
 que = Queue()
 goalStates = 0
@@ -32,7 +33,13 @@ def checkPosition(position):
             return False
 
     #diagonal
-    
+    newCheckPos = [position[0], (len(current_board) - 1 - position[1])]
+    primary  = np.diagonal(current_board, position[1] - position[0])
+    secondary = np.fliplr(current_board).diagonal(offset=newCheckPos[1] - newCheckPos[0])
+    #print(primary,secondary)
+    if(1 in primary or 1 in secondary):
+        return False
+
     return True
 
 que.put(initial_state)
@@ -60,12 +67,11 @@ while not que.empty():
                     }
 
                     if goal_test(new_state):
-                        #for x in range(8):
-                        #    print(new_state["board"][x])
-                        #print(" ")
-                        print("Goal State Reached")
+                        for x in range(4):
+                            print(new_state["board"][x])
+                        print(" ")
+                        #print("Goal State Reached")
                         goalStates+=1
-                        #exit()
 
                     que.put(new_state)
                     visited[str(newBoard)] = True
