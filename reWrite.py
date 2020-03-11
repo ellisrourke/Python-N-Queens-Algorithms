@@ -2,35 +2,24 @@ from queue import Queue
 import copy
 import numpy as np
 import time
+boardSize = int(input("Board Size: "))
 
 que = Queue()
 goalStates = 0
 
 initial_state = {
-    "board": [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0]],
+    "board": [],
 
         "numQueens": 0,
 }
 
 goal_state = {
-    "numQueens": 8
+    "numQueens": boardSize
 }
-'''
-boardSize = int(input("Board Size: "))
+
 nQueens = int(input("Number of Queens: "))
 
-initial_state["board"] = [[0]*boardSize]*boardSize #collumn,row
-goal_state["numQueens"] = nQueens
-'''
-
+initial_state["board"] = [[0 for i in range(boardSize)] for j in range(boardSize)]
 
 def goal_test(state):
     return state["numQueens"] == goal_state["numQueens"]
@@ -40,11 +29,11 @@ def checkPosition(position):
 
     #check all directions for a current queenz3
     #horizontal
-    for i in range(8):
+    for i in range(boardSize):
         if current_board[position[0]][i] == 1:
             return False
     #vertical
-    for i in range(8):
+    for i in range(boardSize):
         if current_board[i][position[1]] == 1:
             return False
 
@@ -69,10 +58,10 @@ while not que.empty():
     current_cost = state["numQueens"]
     usedCols = []
     usedRows = []
-    for i in range(8):
+    for i in range(boardSize):
         if(i in usedCols):
             break
-        for j in range(8):
+        for j in range(boardSize):
             if(j in usedRows):
                 break
             if(checkPosition([i,j])):
@@ -90,10 +79,10 @@ while not que.empty():
                     }
 
                     if goal_test(new_state):
-                        for x in range(8):
-                            print(new_state["board"][x])
-                        print(" ")
-                        print("Goal State Reached")
+                        #for x in range(boardSize):
+                        #    print(new_state["board"][x])
+                        #print(" ")
+                        #print("Goal State Reached")
                         goalStates+=1
 
                     que.put(new_state)
