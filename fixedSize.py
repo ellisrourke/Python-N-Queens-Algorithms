@@ -1,7 +1,6 @@
 from queue import Queue
 import copy
 import numpy as np
-import time
 
 que = Queue()
 goalStates = 0
@@ -67,19 +66,12 @@ while not que.empty():
     state = que.get()
     current_board = state["board"]
     current_cost = state["numQueens"]
-    usedCols = []
-    usedRows = []
+
     for i in range(8):
-        if(i in usedCols):
-            break
         for j in range(8):
-            if(j in usedRows):
-                break
             if(checkPosition([i,j])):
                 newBoard = copy.deepcopy(current_board)
                 newBoard[i][j] = 1
-                usedRows.append(j)
-                usedCols.append(i)
 
                 if str(newBoard) in visited:
                     continue
@@ -93,12 +85,11 @@ while not que.empty():
                         for x in range(8):
                             print(new_state["board"][x])
                         print(" ")
-                        print("Goal State Reached")
+                        #print("Goal State Reached")
                         goalStates+=1
 
                     que.put(new_state)
                     visited[str(newBoard)] = True
 print(goalStates,"goal states found")
-print("Time taken (secs) = ", time.process_time())
 
 
