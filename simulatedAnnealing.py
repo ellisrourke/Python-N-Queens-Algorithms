@@ -81,3 +81,5 @@ while t > 0:
             print(bestBoard["board"][i])
         print(" ")
         break
+
+print("Time taken (secs) = ", time.process_time())

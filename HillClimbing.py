@@ -72,4 +72,5 @@ while bestBoard["cost"]:
 for i in range(boardSize):
     print(bestBoard["board"][i])
 print(" ")
+
 print("Time taken (secs) = ", time.process_time())
