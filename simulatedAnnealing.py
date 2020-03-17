@@ -3,8 +3,13 @@ import numpy as np
 import copy
 import random
 import math
+import sys
 
-boardSize = int(input("Board Size: "))
+
+boardSize = 12
+t = boardSize
+c =  0.9
+
 
 def evaluateCost(board):
     cost = 0
@@ -44,16 +49,19 @@ for i in range(boardSize):
     currentBoard["board"][i][i] = 1
 random.shuffle(currentBoard["board"])
 
+#for i in range(boardSize):
+#    print(currentBoard["board"][i])
+#print(" ")
+
 
 
 
 #simulatedAnnealing
 currentBoard["cost"] = evaluateCost(currentBoard)
 bestBoard = currentBoard
-t = 20#todo
-c = 0.5#todo
+
 while t > 0:
-    print("temp: ",t,"   ","c",c)
+    #print("temp: ",t,"   ","c",c)
     t *= c
     succesor =  copy.deepcopy(bestBoard)
     a = random.randint(0,boardSize-1)

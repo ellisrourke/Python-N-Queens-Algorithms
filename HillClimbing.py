@@ -52,7 +52,7 @@ currentBoard["cost"] = evaluateCost(currentBoard)
 bestBoard = currentBoard
 counter = 0
 while bestBoard["cost"]:
-    if(counter >= 10):
+    if(counter >= boardSize):
         random.shuffle(bestBoard["board"])
         counter = 0
     succesor =  copy.deepcopy(bestBoard)
