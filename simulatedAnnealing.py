@@ -2,6 +2,7 @@ import time
 import numpy as np
 import copy
 import random
+import math
 
 boardSize = int(input("Board Size: "))
 
@@ -42,19 +43,16 @@ currentBoard["board"] = [[0 for i in range(boardSize)] for j in range(boardSize)
 for i in range(boardSize):
     currentBoard["board"][i][i] = 1
 random.shuffle(currentBoard["board"])
-for i in range(boardSize):
-    print(currentBoard["board"][i])
-print(" ")
 
 
 
+
+#simulatedAnnealing
 currentBoard["cost"] = evaluateCost(currentBoard)
 bestBoard = currentBoard
-counter = 0
-while bestBoard["cost"]:
-    if(counter >= 10):
-        random.shuffle(bestBoard["board"])
-        counter = 0
+t = 20#todo
+c = 1#todo
+while t >= 0:
     succesor =  copy.deepcopy(bestBoard)
     a = random.randint(0,boardSize-1)
     b = random.randint(0,boardSize-1)
@@ -65,11 +63,17 @@ while bestBoard["cost"]:
     succesor["board"][a] = succesor["board"][b]
     succesor["board"][b] = temp
     succesor["cost"] = evaluateCost(succesor)
-    counter+=1
-    if succesor["cost"] < bestBoard["cost"]:
-        bestBoard = succesor
 
-for i in range(boardSize):
-    print(bestBoard["board"][i])
-print(" ")
-print("Time taken (secs) = ", time.process_time())
+    diff = evaluateCost(succesor) - bestBoard["cost"]
+    if(diff < 0):
+        bestBoard = succesor
+    else:
+        pval = np.exp(-diff / temp)
+        print(pval)
+
+        if random.random() <= pval:
+            bestBoard = copy.deepcopy(succesor)
+
+
+
+
